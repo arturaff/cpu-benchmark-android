@@ -36,66 +36,64 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             chronometer.base = SystemClock.elapsedRealtime() + 30000
 
+            buttonInfo.setOnClickListener {
+                viewAlertDialog(
+                    resources.getString(R.string.info),
+                    resources.getString(R.string.information),
+                    resources.getString(R.string.understand)
+                ) {}
+            }
+
             buttonStartStopTest.setOnClickListener {
                 isWorked = !isWorked
-                if (isWorked) {
-                    val textView = TextView(this@MainActivity)
-                    textView.text =
-                        "Во время теста, могут наблюдаться лаги, а в противном случае вылет приложения.\n\nP.S Могут возникать проблемы на прошивках MIUI и HyperOS (неполный список). Если у Вас так, то пробуйте снова и снова.\n\nВремя теста: 0:30"
-                    AlertDialog.Builder(this@MainActivity)
-                        .setTitle("Начало теста")
-                        .setView(textView)
-                        .setPositiveButton("Начать") { _, _ ->
-                            chronometer.base = SystemClock.elapsedRealtime() + 30000
-                            val handler = @SuppressLint("HandlerLeak") object : Handler() {
-                                override fun handleMessage(msg: Message) {
-                                    super.handleMessage(msg)
-                                    if (!(msg.data.getBoolean("isWorked"))) {
-                                        thread = null
-                                        isWorked = !isWorked
-                                        chronometer.stop()
-                                        buttonStartStopTest.text =
-                                            resources.getString(R.string.start_test)
-                                    } else textResult.text = "${msg.data.getInt("result")}"
-                                }
-                            }
-                            thread = Thread {
-                                for (scores in 1..2147483647) {
-                                    try {
-                                        if (chronometer.base <= SystemClock.elapsedRealtime()) {
-                                            val bundle = Bundle()
-                                            val message = handler.obtainMessage()
-                                            bundle.putInt("result", scores)
-                                            bundle.putBoolean("isWorked", false)
-                                            message.data = bundle
-                                            handler.sendMessage(message)
-                                            break
-                                        } else {
-                                            val bundle = Bundle()
-                                            val message = handler.obtainMessage()
-                                            bundle.putInt("result", scores)
-                                            bundle.putBoolean("isWorked", true)
-                                            message.data = bundle
-                                            handler.sendMessage(message)
-                                        }
-                                    } catch (_: NullPointerException) {
-                                        break
-                                    }
-                                }
-                            }
-                            thread!!.start()
-                            chronometer.base = SystemClock.elapsedRealtime() + 30000
-                            chronometer.start()
-                            buttonStartStopTest.text = resources.getString(R.string.stop_test)
+                if (isWorked) viewAlertDialog(
+                    resources.getString(R.string.start_test),
+                    resources.getString(R.string.information_2),
+                    resources.getString(R.string.start)
+                ) {
+                    chronometer.base = SystemClock.elapsedRealtime() + 30000
+                    val handler = @SuppressLint("HandlerLeak") object : Handler() {
+                        override fun handleMessage(msg: Message) {
+                            super.handleMessage(msg)
+                            if (!(msg.data.getBoolean("isWorked"))) {
+                                thread = null
+                                isWorked = !isWorked
+                                chronometer.stop()
+                                buttonStartStopTest.text =
+                                    resources.getString(R.string.start_test)
+                            } else textResult.text = "${msg.data.getInt("result")}"
                         }
-                        .create()
-                        .show()
-                    textView.updateLayoutParams<FrameLayout.LayoutParams> {
-                        this.topMargin = 32
-                        this.leftMargin = 70
-                        this.rightMargin = 70
                     }
-                } else {
+                    thread = Thread {
+                        for (scores in 1..2147483647) {
+                            try {
+                                if (chronometer.base <= SystemClock.elapsedRealtime()) {
+                                    val bundle = Bundle()
+                                    val message = handler.obtainMessage()
+                                    bundle.putInt("result", scores)
+                                    bundle.putBoolean("isWorked", false)
+                                    message.data = bundle
+                                    handler.sendMessage(message)
+                                    break
+                                } else {
+                                    val bundle = Bundle()
+                                    val message = handler.obtainMessage()
+                                    bundle.putInt("result", scores)
+                                    bundle.putBoolean("isWorked", true)
+                                    message.data = bundle
+                                    handler.sendMessage(message)
+                                }
+                            } catch (_: NullPointerException) {
+                                break
+                            }
+                        }
+                    }
+                    thread!!.start()
+                    chronometer.base = SystemClock.elapsedRealtime() + 30000
+                    chronometer.start()
+                    buttonStartStopTest.text = resources.getString(R.string.stop_test)
+                }
+                else {
                     thread = null
                     chronometer.stop()
                     buttonStartStopTest.text = resources.getString(R.string.start_test)
@@ -103,4 +101,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun viewAlertDialog(
+        title: String,
+        message: String,
+        buttonText: String,
+        onClick: () -> Unit,
+    ) = binding.apply {
+            val textView = TextView(this@MainActivity)
+            textView.text = message
+            AlertDialog.Builder(this@MainActivity)
+                .setTitle(title)
+                .setView(textView)
+                .setPositiveButton(buttonText) { _, _ ->
+                    onClick()
+                }
+                .create()
+                .show()
+            textView.updateLayoutParams<FrameLayout.LayoutParams> {
+                this.topMargin = 32
+                this.leftMargin = 70
+                this.rightMargin = 70
+            }
+        }
 }
