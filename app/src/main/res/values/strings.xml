@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">CPU Benchmark</string>
-    <string name="result">Результат</string>
-    <string name="start_test">Начать тест</string>
-    <string name="stop_test">Остановить тест</string>
+    <string name="result">Result</string>
+    <string name="start_test">Start test</string>
+    <string name="stop_test">Stop test</string>
     <string name="_0">0</string>
-    <string name="info">Информация</string>
-    <string name="information">Приложение поможет вам максимально загрузить ваш процессор и поможет выяснить, насколько он производителен.\n\nПринцип работы: при старте теста запускается второстепенный поток, в котором в бесконечном порядке считает очки. Далее все зависит от вашего процессора, чем быстрее он сможет обработать множество данных из второстепенного потока, тем больше будет очков</string>
-    <string name="understand">Понятно</string>
-    <string name="information_2">Во время теста, могут наблюдаться лаги, а в противном случае вылет приложения.\n\nP.S Могут возникать проблемы на прошивках MIUI и HyperOS (неполный список). Если у Вас так, то пробуйте снова и снова.\n\nВремя теста: 01:00</string>
-    <string name="start">Начать</string>
+    <string name="info">Information</string>
+    <string name="information">The application will help you load your processor to the maximum and help you find out how productive it is.</string>
+    <string name="information_2">Operating principle: when the test starts, a secondary thread is launched, in which it counts the points in an infinite order. Then it all depends on your processor, the faster it can process a lot of data from a secondary thread, the more points you will get</string>
+    <string name="start">Start</string>
+    <string name="understand">Understand</string>
 </resources>
