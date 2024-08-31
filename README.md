@@ -6,3 +6,6 @@
 1) Redmi Note 13 Pro+ (Android 14, HyperOS) - 594 723 193 очков
 2) Redmi Note 8 (Android 14, EvolutionX кастомная прошивка) - 130 005 789 очков
 3) Honor 20 Lite (Android 10, MagicUI) - 133 357 526 очков
+4) Redmi Note 5A Prime (Android 12, CrDroid кастомная прошивка) - 77 631 806 очков
+
+Скачать приложение можно здесь, по ссылке на 4PDA: https://4pda.to/forum/index.php?showtopic=1093837
