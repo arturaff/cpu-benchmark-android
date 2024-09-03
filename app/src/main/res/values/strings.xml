@@ -5,8 +5,8 @@
     <string name="stop_test">Stop test</string>
     <string name="_0">0</string>
     <string name="info">Information</string>
-    <string name="information">The application will help you load your processor to the maximum and help you find out how productive it is.</string>
-    <string name="information_2">Operating principle: when the test starts, a secondary thread is launched, in which it counts the points in an infinite order. Then it all depends on your processor, the faster it can process a lot of data from a secondary thread, the more points you will get</string>
+    <string name="information">The application will help you load your processor to the maximum and help you find out how productive it is.\n\nWorking principle: when the test starts, a secondary thread is launched, in which it counts the points in an infinite order. Then it all depends on your processor, the faster it can process a lot of data from a secondary thread, the more points you will get</string>
+    <string name="warn">During the test, do not turn off the device, as this may result in inaccurate results.\n\nTest time: 01:00</string>
     <string name="start">Start</string>
     <string name="understand">Understand</string>
 </resources>

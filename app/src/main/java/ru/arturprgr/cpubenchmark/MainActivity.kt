@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 isWorked = !isWorked
                 if (isWorked) viewAlertDialog(
                     resources.getString(R.string.start_test),
-                    resources.getString(R.string.information_2),
+                    resources.getString(R.string.warn),
                     resources.getString(R.string.start)
                 ) {
                     val handler = @SuppressLint("HandlerLeak") object : Handler() {
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetChronometer() {
-        binding.chronometer.base = SystemClock.elapsedRealtime() + 5000
+        binding.chronometer.base = SystemClock.elapsedRealtime() + 60000
     }
 
     private fun viewAlertDialog(
