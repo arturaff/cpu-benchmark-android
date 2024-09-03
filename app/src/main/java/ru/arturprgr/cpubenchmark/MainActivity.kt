@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun resetChronometer() {
-        binding.chronometer.base = SystemClock.elapsedRealtime() + 60000
+        binding.chronometer.base = SystemClock.elapsedRealtime() + 5000
     }
 
     private fun viewAlertDialog(
