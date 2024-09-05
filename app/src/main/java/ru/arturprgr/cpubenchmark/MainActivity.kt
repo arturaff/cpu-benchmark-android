@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                     buttonStartStopTest.isVisible = false
 
                     view.findViewById<TextView>(R.id.text_result).text = "Количество очков: $result"
+                    view.findViewById<TextInputEditText>(R.id.edit_model).setText("${Build.MANUFACTURER} ${Build.MODEL}")
                     AlertDialog.Builder(this@MainActivity)
                         .setTitle(resources.getString(R.string.feedback))
                         .setView(view)
