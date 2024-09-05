@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1045493957601",
+    "project_id": "cpu-benchmark-c0874",
+    "storage_bucket": "cpu-benchmark-c0874.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045493957601:android:dafbe5d57dbd3bfc44c8a0",
+        "android_client_info": {
+          "package_name": "ru.arturprgr.cpubenchmark"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUxl3ptH03nZrnjszKrZqSBaoece5oN-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

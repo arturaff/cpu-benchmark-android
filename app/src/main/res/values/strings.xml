@@ -6,7 +6,15 @@
     <string name="_0">0</string>
     <string name="info">Information</string>
     <string name="information">The application will help you load your processor to the maximum and help you find out how productive it is.\n\nWorking principle: when the test starts, a secondary thread is launched, in which it counts the points in an infinite order. Then it all depends on your processor, the faster it can process a lot of data from a secondary thread, the more points you will get</string>
-    <string name="warn">During the test, do not turn off the device, as this may result in inaccurate results.\n\nTest time: 01:00</string>
+    <string name="warn">During the test, do not turn off the device and do not exit app, as this may result in inaccurate results.\n\nTest time: 01:00</string>
     <string name="start">Start</string>
     <string name="understand">Understand</string>
+    <string name="app_pause">The test was interrupted! During the test, do not turn off the screen and exit the application. To start over, re-login to the application</string>
+    <string name="test_stopped">Test stopped</string>
+    <string name="send">Send</string>
+    <string name="no">No</string>
+    <string name="send_result">A developer wants to collect information about the performance of different gadgets. If you don’t mind participating, then enter the manufacturer and model of your device in the field. Before submitting, make sure you have an Internet connection</string>
+    <string name="feedback">Feedback</string>
+    <string name="manufacturer_and_model">Manufacturer and model</string>
+    <string name="thanks">Thanks!</string>
 </resources>
