@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var view: View
     private var isWorked: Boolean = false
 
-    @SuppressLint("SetTextI18n", "NewApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -52,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             handler = @SuppressLint("HandlerLeak") object : Handler() {
+                @SuppressLint("SetTextI18n")
                 override fun handleMessage(msg: Message) {
                     super.handleMessage(msg)
                     val result = "${msg.data.getString("result")}"
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                     AlertDialog.Builder(this@MainActivity)
                         .setTitle(resources.getString(R.string.feedback))
                         .setView(view)
-                        .setPositiveButton("Отправить") { _, _ ->
+                        .setPositiveButton(resources.getString(R.string.send)) { _, _ ->
                             val model =
                                 view.findViewById<TextInputEditText>(R.id.edit_model).text!!.trim()
                             Firebase.database.getReference("results/$model").setValue(result)
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                                 Toast.LENGTH_LONG
                             ).show()
                         }
-                        .setNegativeButton("Нет") { _, _ -> }
+                        .setNegativeButton(resources.getString(R.string.no)) { _, _ -> }
                         .create()
                         .show()
 
