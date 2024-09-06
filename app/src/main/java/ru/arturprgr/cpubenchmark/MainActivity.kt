@@ -2,6 +2,8 @@ package ru.arturprgr.cpubenchmark
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -11,6 +13,7 @@ import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +30,7 @@ import com.google.firebase.ktx.Firebase
 import ru.arturprgr.cpubenchmark.databinding.ActivityMainBinding
 import java.text.DecimalFormat
 
+
 @Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -36,6 +40,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var view: View
     private var isWorked: Boolean = false
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,8 +53,18 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        window.statusBarColor = resources.getColor(R.color.start_color)
 
         binding.apply {
+            textManufacturer.text =
+                "${resources.getString(R.string.manufacturer)}: ${Build.MANUFACTURER}"
+            textModel.text = "${resources.getString(R.string.model)}: ${Build.MODEL}"
+            textProcessor.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+                    text = "${resources.getString(R.string.processor)}: ${Build.SOC_MANUFACTURER} ${Build.SOC_MODEL}"
+                else isVisible = false
+            }
             handler = @SuppressLint("HandlerLeak") object : Handler() {
                 @SuppressLint("SetTextI18n")
                 override fun handleMessage(msg: Message) {
@@ -64,8 +79,10 @@ class MainActivity : AppCompatActivity() {
                     chronometer.stop()
                     buttonStartStopTest.isVisible = false
 
-                    view.findViewById<TextView>(R.id.text_result).text = "Количество очков: $result"
-                    view.findViewById<TextInputEditText>(R.id.edit_model).setText("${Build.MANUFACTURER} ${Build.MODEL}")
+                    view.findViewById<TextView>(R.id.text_result).text =
+                        "${resources.getString(R.string.number_of_points)}: $result"
+                    view.findViewById<TextInputEditText>(R.id.edit_model)
+                        .setText("${Build.MANUFACTURER} ${Build.MODEL}")
                     AlertDialog.Builder(this@MainActivity)
                         .setTitle(resources.getString(R.string.feedback))
                         .setView(view)
@@ -118,6 +135,15 @@ class MainActivity : AppCompatActivity() {
                     resources.getString(R.string.information),
                     resources.getString(R.string.understand),
                     {}, {}
+                )
+            }
+
+            buttonStats.setOnClickListener {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://4pda.to/forum/index.php?showtopic=1094108")
+                    )
                 )
             }
 

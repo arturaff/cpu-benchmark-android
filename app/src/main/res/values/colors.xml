@@ -4,4 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="day">#323232</color>
     <color name="night">#CDCDCD</color>
+    <color name="start_color">#F57C00</color>
+    <color name="end_color">#E65100</color>
 </resources>

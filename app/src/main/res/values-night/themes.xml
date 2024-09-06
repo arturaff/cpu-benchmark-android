@@ -1,9 +1,8 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.CPUBenchmark" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-        <item name="tint">@color/night</item>
+        <item name="colorPrimary">@color/start_color</item>
         <item name="fontFamily">@font/inter_bold</item>
         <item name="android:textStyle">bold</item>
     </style>

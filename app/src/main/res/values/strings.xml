@@ -17,4 +17,9 @@
     <string name="feedback">Feedback</string>
     <string name="manufacturer_and_model">Manufacturer and model</string>
     <string name="thanks">Thanks!</string>
+    <string name="device_information">Device information</string>
+    <string name="model">Model</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="number_of_points">Number of points</string>
+    <string name="processor">Processor</string>
 </resources>

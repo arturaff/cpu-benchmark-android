@@ -18,4 +18,9 @@
     <string name="feedback">Обратная связь</string>
     <string name="manufacturer_and_model">Производитель и модель</string>
     <string name="thanks">Спасибо!</string>
+    <string name="device_information">Информация о устройстве</string>
+    <string name="model">Модель</string>
+    <string name="manufacturer">Производитель</string>
+    <string name="number_of_points">Количетсво очков</string>
+    <string name="processor">Процессор</string>
 </resources>
