@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -39,10 +39,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
                     android:text="@string/device_information"
                     android:textColor="@color/white"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginStart="8dp"
                     android:textSize="18sp" />
 
                 <TextView
@@ -103,51 +103,65 @@
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp">
+        android:layout_gravity="center_horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="vertical"
-            tools:ignore="UselessParent">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_results"
+            android:name="ru.arturprgr.cpubenchmark.ui.ResultsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
-            <TextView
+        <FrameLayout
+            android:id="@+id/fragment_test"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="@string/result"
-                android:textSize="18sp" />
+                android:layout_marginTop="32dp"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
 
-            <TextView
-                android:id="@+id/text_result"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/result"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/text_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="40sp"
+                    tools:text="0" />
+
+                <Chronometer
+                    android:id="@+id/chronometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:countDown="true"
+                    android:textSize="18sp"
+                    tools:ignore="UnusedAttribute" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_start_stop_test"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/_0"
-                android:textSize="40sp" />
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:text="@string/start_test"
+                android:textColor="@color/white" />
 
-            <Chronometer
-                android:id="@+id/chronometer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:countDown="true"
-                android:textSize="18sp"
-                tools:ignore="UnusedAttribute" />
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/button_start_stop_test"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:text="@string/start_test"
-            android:textColor="@color/white" />
+        </FrameLayout>
 
     </FrameLayout>
 

@@ -3,7 +3,6 @@
     <string name="result">Result</string>
     <string name="start_test">Start test</string>
     <string name="stop_test">Stop test</string>
-    <string name="_0">0</string>
     <string name="info">Information</string>
     <string name="information">The application will help you load your processor to the maximum and help you find out how productive it is.\n\nWorking principle: when the test starts, a secondary thread is launched, in which it counts the points in an infinite order. Then it all depends on your processor, the faster it can process a lot of data from a secondary thread, the more points you will get</string>
     <string name="warn">During the test, do not turn off the device and do not exit app, as this may result in inaccurate results.\n\nTest time: 01:00</string>
@@ -22,4 +21,8 @@
     <string name="manufacturer">Manufacturer</string>
     <string name="number_of_points">Number of points</string>
     <string name="processor">Processor</string>
+    <string name="process">Process…</string>
+    <string name="results_of_tests">Results of tests</string>
+    <string name="enter_the_name_of_device">Name of device (better start with the brand)</string>
+    <string name="canceled">Canceled</string>
 </resources>
