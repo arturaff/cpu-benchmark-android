@@ -16,6 +16,7 @@ import java.util.Locale
 
 class ResultsFragment : Fragment() {
     private lateinit var binding: FragmentResultsBinding
+    private lateinit var findAdapter: ResultsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,12 +42,12 @@ class ResultsFragment : Fragment() {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    val adapter = ResultsAdapter()
-                    listResults.adapter = adapter
+                    findAdapter = ResultsAdapter()
+                    listResults.adapter = findAdapter
                     for (pack in Singleton.resultsAdapter.getList()) if (pack.device.lowercase(
                             Locale.getDefault()
                         ).contains("$s".lowercase(Locale.getDefault()))
-                    ) adapter.addResult(pack)
+                    ) findAdapter.addResult(pack)
                 }
             })
         }

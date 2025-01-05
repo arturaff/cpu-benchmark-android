@@ -12,13 +12,5 @@ class FirebaseHelper(path: String) {
         reference.get().addOnSuccessListener {
             onGet("${it.value}")
         }
-//        кусок прошлой версии
-//        reference.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                onGet("${snapshot.value}")
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {}
-//        })
     }
 }

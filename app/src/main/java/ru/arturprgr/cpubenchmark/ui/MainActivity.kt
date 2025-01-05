@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
+import android.util.Log
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -22,7 +23,6 @@ import ru.arturprgr.cpubenchmark.data.Result
 import ru.arturprgr.cpubenchmark.data.Singleton
 import ru.arturprgr.cpubenchmark.databinding.ActivityMainBinding
 import java.text.DecimalFormat
-import kotlin.text.StringBuilder
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -32,20 +32,17 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
-        FirebaseHelper("results").getValue { results ->
+        FirebaseHelper("results").getValue {
+            val results = it.replace("={", "/").replace("{", "").replace("}", "")
             var builder: StringBuilder = StringBuilder()
-            for (index in 1..results.length - 2) {
+            var device: StringBuilder = StringBuilder()
+            var result: StringBuilder = StringBuilder()
+            for (index in results.indices) {
                 if (results[index] != ',') builder.append(results[index])
                 else {
-                    val device = StringBuilder()
-                    val result = StringBuilder()
                     if (builder[0] == ' ') builder.deleteCharAt(0)
-                    for (iDevice in 0..<builder.indexOf('=')) {
-                        device.append(builder[iDevice])
-                    }
-                    for (iResult in builder.indexOf('=') + 1..<builder.length) {
-                        result.append(builder[iResult])
-                    }
+                    for (iDevice in 0..<builder.indexOf('=')) device.append(builder[iDevice])
+                    for (iResult in builder.indexOf('=') + 1..<builder.length) result.append(builder[iResult])
                     Singleton.resultsAdapter.addResult(
                         Result(
                             0,
@@ -54,6 +51,8 @@ class MainActivity : AppCompatActivity() {
                         )
                     )
                     builder = StringBuilder()
+                    device = StringBuilder()
+                    result = StringBuilder()
                 }
             }
         }
@@ -72,12 +71,10 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             textManufacturer.text =
                 "${resources.getString(R.string.manufacturer)}: ${Build.MANUFACTURER}"
-            textModel.text =
-                "${resources.getString(R.string.model)}:${Build.MANUFACTURER} ${Build.BRAND} ${Build.MODEL}"
+            textModel.text = "${resources.getString(R.string.model)}: ${Build.BRAND} ${Build.MODEL}"
             textProcessor.apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
-                    text =
-                        "${resources.getString(R.string.processor)}: ${Build.SOC_MANUFACTURER} ${Build.SOC_MODEL}"
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) text =
+                    "${resources.getString(R.string.processor)}: ${Build.SOC_MANUFACTURER} ${Build.SOC_MODEL}"
                 else isVisible = false
             }
             textResult.text =
@@ -85,27 +82,11 @@ class MainActivity : AppCompatActivity() {
             chronometer.base = SystemClock.elapsedRealtime() + 60000
 
             handler = Handler(mainLooper)
-//            кусок прошлой версии
-//            handler = @SuppressLint("HandlerLeak") object : Handler() {
-//                @SuppressLint("SetTextI18n")
-//                override fun handleMessage(msg: Message) {
-//                    super.handleMessage(msg)
-//                    val result = msg.data.getInt("result")
-//                    thread.interrupt()
-//                    getSharedPreferences("sPrefs", Context.MODE_PRIVATE).edit()
-//                        .putInt("result", result).apply()
-//                    chronometer.stop()
-//                    buttonStartStopTest.isVisible = false
-//                    FirebaseHelper("results/${("${Build.MANUFACTURER} " + Build.MODEL).replace("/", "Slash")}").setValue(result)
-//                }
-//            }
-
             thread = Thread {
                 for (scores in 0..2147483647) {
                     if (chronometer.base <= SystemClock.elapsedRealtime()) {
                         val result = DecimalFormat("###,###.##").format(scores)
                         val device = "${Build.MANUFACTURER} ${Build.BRAND} ${Build.MODEL}"
-                        device.replace("/", "Slash")
                         getSharedPreferences("sPrefs", Context.MODE_PRIVATE).edit()
                             .putString("result", result).apply()
                         FirebaseHelper("results/$device").setValue(scores)
@@ -118,25 +99,17 @@ class MainActivity : AppCompatActivity() {
                         }
                         thread.interrupt()
                         break
-//                        кусок прошлой версии
-//                        val bundle = Bundle()
-//                        val msg = handler.obtainMessage()
-//                        bundle.putInt("result", scores)
-//                        msg.data = bundle
-//                        handler.sendMessage(msg)
-//                        break
                     }
                 }
             }
             thread.priority = Thread.MAX_PRIORITY
 
             buttonInfo.setOnClickListener {
-                viewAlertDialog(
-                    resources.getString(R.string.info),
+                viewAlertDialog(resources.getString(R.string.info),
                     resources.getString(R.string.information),
                     resources.getString(R.string.understand),
-                    {}, {}
-                )
+                    {},
+                    {})
             }
 
             buttonStats.setOnClickListener {
@@ -145,8 +118,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             buttonStartStopTest.setOnClickListener {
-                if (!isWorked) viewAlertDialog(
-                    resources.getString(R.string.start_test),
+                if (!isWorked) viewAlertDialog(resources.getString(R.string.start_test),
                     resources.getString(R.string.warn),
                     resources.getString(R.string.start),
                     {
@@ -158,8 +130,8 @@ class MainActivity : AppCompatActivity() {
                         buttonStartStopTest.text = resources.getString(R.string.stop_test)
                         buttonStats.isVisible = false
                         buttonInfo.isVisible = false
-                    }, {}
-                )
+                    },
+                    {})
                 else {
                     isWorked = false
                     thread.interrupt()
@@ -178,12 +150,11 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         if (isWorked) {
             isWorked = false
-            viewAlertDialog(
-                resources.getString(R.string.test_stopped),
+            viewAlertDialog(resources.getString(R.string.test_stopped),
                 resources.getString(R.string.app_pause),
                 resources.getString(R.string.understand),
-                {}, {}
-            )
+                {},
+                {})
         }
     }
 
@@ -209,17 +180,12 @@ class MainActivity : AppCompatActivity() {
     ) = binding.apply {
         val textView = TextView(this@MainActivity)
         textView.text = message
-        AlertDialog.Builder(this@MainActivity)
-            .setTitle(title)
-            .setView(textView)
+        AlertDialog.Builder(this@MainActivity).setTitle(title).setView(textView)
             .setPositiveButton(buttonText) { _, _ ->
                 onClick()
-            }
-            .setOnCancelListener {
+            }.setOnCancelListener {
                 onCancel()
-            }
-            .create()
-            .show()
+            }.create().show()
 
         textView.updateLayoutParams<FrameLayout.LayoutParams> {
             this.topMargin = 32
